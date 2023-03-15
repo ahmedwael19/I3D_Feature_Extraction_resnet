@@ -95,6 +95,7 @@ def run(i3d, frequency, frames_dir, batch_size, sample_mode):
 			assert(batch_data.shape[-3]==224)
 			temp = forward_batch(batch_data)
 			full_features[0].append(temp)
+	print("AAAAAAAAA")
 
 	full_features = [np.concatenate(i, axis=0) for i in full_features]
 	full_features = [np.expand_dims(i, axis=0) for i in full_features]
