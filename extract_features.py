@@ -78,10 +78,10 @@ def run(i3d, frequency, frames_dir, batch_size, sample_mode):
 	else:
 		full_features = [[]]
 
-
 	for batch_id in range(batch_num): 
 		batch_data = load_rgb_batch(frames_dir, rgb_files, frame_indices[batch_id])
 		if(sample_mode == 'oversample'):
+		   print("AAAAAA")
 		   batch_data_ten_crop = oversample_data(batch_data)
 		   for i in range(10):
 			   assert(batch_data_ten_crop[i].shape[-2]==224)
@@ -95,7 +95,7 @@ def run(i3d, frequency, frames_dir, batch_size, sample_mode):
 			assert(batch_data.shape[-3]==224)
 			temp = forward_batch(batch_data)
 			full_features[0].append(temp)
-	
+
 	full_features = [np.concatenate(i, axis=0) for i in full_features]
 	full_features = [np.expand_dims(i, axis=0) for i in full_features]
 	full_features = np.concatenate(full_features, axis=0)

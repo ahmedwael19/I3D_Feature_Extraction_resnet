@@ -14,13 +14,25 @@ import torchvision
 from extract_features import run
 from resnet import i3_res50
 import os
+import sys
 
+
+from pathlib import Path
+
+
+FILE = Path(__file__).resolve()
+ROOT = FILE.parents[0]  #  root directory
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))  # add ROOT to PATH
+ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
+print(ROOT)
 
 def generate(datasetpath, outputpath, pretrainedpath, frequency, batch_size, sample_mode):
 	Path(outputpath).mkdir(parents=True, exist_ok=True)
 	temppath = outputpath+ "/temp/"
 	rootdir = Path(datasetpath)
 	videos = [str(f) for f in rootdir.glob('**/*.mp4')]
+	print(videos)
 	# setup the model
 	i3d = i3_res50(400, pretrainedpath)
 	i3d.cuda()
@@ -40,9 +52,9 @@ def generate(datasetpath, outputpath, pretrainedpath, frequency, batch_size, sam
 
 if __name__ == '__main__': 
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--datasetpath', type=str, default="samplevideos/")
-	parser.add_argument('--outputpath', type=str, default="output")
-	parser.add_argument('--pretrainedpath', type=str, default="pretrained/i3d_r50_kinetics.pth")
+	parser.add_argument('--datasetpath', type=str, default=ROOT/ "samplevideos/")
+	parser.add_argument('--outputpath', type=str, default=ROOT/ "output")
+	parser.add_argument('--pretrainedpath', type=str, default=ROOT/ "pretrained/i3d_r50_kinetics.pth")
 	parser.add_argument('--frequency', type=int, default=16)
 	parser.add_argument('--batch_size', type=int, default=20)
 	parser.add_argument('--sample_mode', type=str, default="oversample")
