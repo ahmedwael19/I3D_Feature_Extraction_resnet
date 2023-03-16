@@ -56,7 +56,7 @@ if __name__ == '__main__':
 	parser.add_argument('--outputpath', type=str, default=ROOT/ "output")
 	parser.add_argument('--pretrainedpath', type=str, default=ROOT/ "pretrained/i3d_r50_kinetics.pth")
 	parser.add_argument('--frequency', type=int, default=16)
-	parser.add_argument('--batch_size', type=int, default=20)
+	parser.add_argument('--batch_size', type=int, default=10)
 	parser.add_argument('--sample_mode', type=str, default="oversample")
 	args = parser.parse_args()
 	generate(args.datasetpath, str(args.outputpath), args.pretrainedpath, args.frequency, args.batch_size, args.sample_mode)    
